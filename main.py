@@ -1,3 +1,6 @@
+from game_objects import Player, Dungeon
+from game_repl import *
+
 def main():
   print("Hello world")
 
