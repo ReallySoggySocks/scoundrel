@@ -1,8 +1,9 @@
-from game_objects import Player, Dungeon
-from game_repl import *
+from game_objects import Player, Dungeon, Deck # type: ignore
 
 def main():
-  print("Hello world")
+  player = Player()
+  dungeon = Dungeon(player)
+  print(dungeon.deck.cards)
 
 if __name__ == "__main__":
   main()
