@@ -57,9 +57,13 @@ class Dungeon:
     self.deck.create_deck()
     self.room_count = self.deck.size // 4
 
+  def create_starting_room(self):
+    self.room = self.deck.cards[:4]
+    self.deck.cards = self.deck.cards[5:]
+
   def create_room(self):
-    self.room = self.deck[:4]
-    self.deck = self.deck[5:]
+    self.room.append(self.deck.cards[:3])
+    self.deck.cards = self.deck.cards[4:]
 
   def pass_turn(self):
     if self.room_count == 0:
