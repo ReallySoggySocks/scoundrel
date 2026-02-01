@@ -13,13 +13,24 @@ class Player:
 
   def clean_input(self):
     cleaned = []
-    cleaned.append(re.findall(r"\d+", self.player_input))
-    cleaned.append(re.findall(r"\w", self.player_input))
+    cleaned.extend(re.findall(r"\d+", self.player_input))
+    cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
+    cleaned[0] = cleaned[0].capitalize()
+    cleaned[1] = cleaned[1].capitalize()
+    cleaned = "".join(cleaned)
     return cleaned
 
-  def player_choice(self):
+  def input_check(self, dungeon):
+    for card in dungeon.room:
+      if self.player_input == card:
+        dungeon.room.remove(card)
+        return
+    print("Please choose a valid card.")
+
+  def player_choice(self, dungeon):
     self.player_input = input("Player Choice: ")
     cleaned = self.clean_input()
+    self.input_check(dungeon)
     self.previous_turn = cleaned
     
     if ("C" or "S") in cleaned:

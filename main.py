@@ -6,17 +6,20 @@ def main():
   player = Player()
   dungeon = Dungeon(player)
   dungeon.create_starting_room()
+
   while True:
     if player.player_input == ("q" or "quit"):
       sys.exit()
 
     if len(dungeon.room) == 3:
-      dungeon.create_
+      dungeon.create_room()
 
     for card in dungeon.room:
       print(card, end=" | ")
     print("\n")
-    player.player_choice()
+
+    player.player_choice(dungeon)
+
     break
   return
 
