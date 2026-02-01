@@ -30,6 +30,7 @@ class Player:
   def player_choice(self, dungeon):
     self.player_input = input("Player Choice: ")
     cleaned = self.clean_input()
+    self.player_input = cleaned
     self.input_check(dungeon)
     self.previous_turn = cleaned
     
