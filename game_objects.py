@@ -15,13 +15,11 @@ class Player:
   def clean_input(self):
     cleaned = []
     cleaned.extend(re.findall(r"\d+", self.player_input))
-    print("Digit: ", cleaned)
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
-    print("Digit and char: ", cleaned)
     cleaned[0] = cleaned[0].capitalize()
     cleaned[-1] = cleaned[-1].capitalize()
     cleaned = "".join(cleaned)
-    
+
     if "Q" == cleaned or "QUIT" == cleaned:
       sys.exit()
 
@@ -42,9 +40,7 @@ class Player:
     
     if "C" in cleaned or "S" in cleaned:
       if self.weapon:
-        if len(self.weapon.enemies_slain) == 0:
-          self.weapon.enemies_slain.append(cleaned)
-        elif int(self.weapon.enemies_slain[-1][0]) < RANKS[cleaned[0]]:
+        if len(self.weapon.enemies_slain) != 0 and int(self.weapon.enemies_slain[-1][0]) < RANKS[cleaned[0]]:
           second_choice = input("Fight barehanded? ")
           second_choice = second_choice.strip().lower()
           if second_choice == ("y" or "yes"):
@@ -52,10 +48,11 @@ class Player:
 
         reduced = RANKS[cleaned[0]] - self.weapon.damage
         if reduced < 0:
-          pass
+          return
         self.health -= reduced
 
-      self.health -= RANKS[cleaned[0]]
+      else:
+        self.health -= RANKS[cleaned[0]]
 
     if "H" in cleaned:
       self.health += RANKS[cleaned[0]]
@@ -68,6 +65,7 @@ class Player:
   def equip_weapon(self):
       weapon_rank = RANKS[self.player_input[0]]
       self.weapon = Weapon(weapon_rank)
+      print(self.weapon.damage)
 
 class Dungeon:
   def __init__(self, player):
