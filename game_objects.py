@@ -14,14 +14,17 @@ class Player:
 
   def clean_input(self):
     cleaned = []
-    cleaned.extend(re.findall(r"\d{1,2}", self.player_input))
+    cleaned.extend(re.findall(r"\d+", self.player_input))
+    print("Digit: ", cleaned)
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
-    if "q" == cleaned or "quit" == cleaned:
-      sys.exit()
-
+    print("Digit and char: ", cleaned)
     cleaned[0] = cleaned[0].capitalize()
     cleaned[-1] = cleaned[-1].capitalize()
     cleaned = "".join(cleaned)
+    
+    if "Q" == cleaned or "QUIT" == cleaned:
+      sys.exit()
+
     return cleaned
 
   def input_check(self, dungeon):
@@ -46,11 +49,11 @@ class Player:
           second_choice = second_choice.strip().lower()
           if second_choice == ("y" or "yes"):
             self.health -= RANKS[cleaned[0]]
-          else:
-            reduced = RANKS[cleaned[0]] - self.weapon.damage
-            if reduced < 0:
-              pass
-            self.health -= reduced
+
+        reduced = RANKS[cleaned[0]] - self.weapon.damage
+        if reduced < 0:
+          pass
+        self.health -= reduced
 
       self.health -= RANKS[cleaned[0]]
 

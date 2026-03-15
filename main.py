@@ -29,7 +29,7 @@ def main():
 
     player.player_choice(dungeon)
 
-    os.system("clear")
+    #os.system("clear")
 
   return
 
