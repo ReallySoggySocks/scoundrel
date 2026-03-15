@@ -8,9 +8,6 @@ def main():
   dungeon.create_starting_room()
 
   while True:
-    if player.player_input == ("q" or "quit"):
-      sys.exit()
-
     if len(dungeon.room) == 3:
       dungeon.create_room()
 
@@ -20,7 +17,13 @@ def main():
 
     player.player_choice(dungeon)
 
-    break
+    if player.health <= 0:
+      print("Game Over!")
+      break
+    elif dungeon.deck.size == 0:
+      print("You Win!")
+      break
+
   return
 
 if __name__ == "__main__":

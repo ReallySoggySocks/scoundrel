@@ -1,5 +1,6 @@
 import random
 import re
+import sys
 
 RANKS = {"A": 14, "K": 13, "Q": 12, "J": 11, "10": 10, "9": 9, "8": 8, "7": 7, "6": 6, "5": 5, "4": 4, "3": 3, "2": 2, "1": 1}
 SUIT =["H", "D", "C", "S"]
@@ -15,16 +16,20 @@ class Player:
     cleaned = []
     cleaned.extend(re.findall(r"\d+", self.player_input))
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
+    if "q" in cleaned or "quit" in cleaned:
+      sys.exit()
+      
     cleaned[0] = cleaned[0].capitalize()
     cleaned[1] = cleaned[1].capitalize()
     cleaned = "".join(cleaned)
+    print(cleaned)
     return cleaned
 
   def input_check(self, dungeon):
     for card in dungeon.room:
-      if self.player_input == card:
-        dungeon.room.remove(card)
-        return
+      print(card)
+      if self.player_input == f"{card.rank}{card.suit}":
+        pass
     print("Please choose a valid card.")
 
   def player_choice(self, dungeon):
@@ -74,6 +79,7 @@ class Dungeon:
     self.deck.cards = self.deck.cards[5:]
 
   def create_room(self):
+    print(self.deck.cards)
     self.room.append(self.deck.cards[:3])
     self.deck.cards = self.deck.cards[4:]
 
