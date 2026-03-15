@@ -15,6 +15,7 @@ class Player:
   def clean_input(self):
     cleaned = []
     cleaned.extend(re.findall(r"\d+", self.player_input))
+    print("Cleaned Digit: ", cleaned)
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
     cleaned[0] = cleaned[0].capitalize()
     cleaned[-1] = cleaned[-1].capitalize()
@@ -63,7 +64,10 @@ class Player:
       self.equip_weapon()
 
   def equip_weapon(self):
-      weapon_rank = RANKS[self.player_input[0]]
+      if len(self.player_input) > 2:
+        weapon_rank = RANKS[self.player_input[:2]]
+      else:
+        weapon_rank = RANKS[self.player_input[0]]
       self.weapon = Weapon(weapon_rank)
       print(self.weapon.damage)
 
