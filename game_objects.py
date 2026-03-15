@@ -14,23 +14,21 @@ class Player:
 
   def clean_input(self):
     cleaned = []
-    cleaned.extend(re.findall(r"\d+", self.player_input))
+    cleaned.extend(re.findall(r"\d{1,2}", self.player_input))
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
-    if "q" in cleaned or "quit" in cleaned:
+    if "q" == cleaned or "quit" == cleaned:
       sys.exit()
-      
+
     cleaned[0] = cleaned[0].capitalize()
-    cleaned[1] = cleaned[1].capitalize()
+    cleaned[-1] = cleaned[-1].capitalize()
     cleaned = "".join(cleaned)
-    print(cleaned)
     return cleaned
 
   def input_check(self, dungeon):
     for card in dungeon.room:
-      print(card)
       if self.player_input == f"{card.rank}{card.suit}":
-        pass
-    print("Please choose a valid card.")
+        dungeon.room.remove(card)
+      
 
   def player_choice(self, dungeon):
     self.player_input = input("Player Choice: ")
@@ -39,9 +37,11 @@ class Player:
     self.input_check(dungeon)
     self.previous_turn = cleaned
     
-    if ("C" or "S") in cleaned:
+    if "C" in cleaned or "S" in cleaned:
       if self.weapon:
-        if self.weapon.enemies_slain[-1].rank > RANKS[cleaned[0]]:
+        if len(self.weapon.enemies_slain) == 0:
+          self.weapon.enemies_slain.append(cleaned)
+        elif int(self.weapon.enemies_slain[-1][0]) < RANKS[cleaned[0]]:
           second_choice = input("Fight barehanded? ")
           second_choice = second_choice.strip().lower()
           if second_choice == ("y" or "yes"):
@@ -79,8 +79,8 @@ class Dungeon:
     self.deck.cards = self.deck.cards[5:]
 
   def create_room(self):
-    print(self.deck.cards)
-    self.room.append(self.deck.cards[:3])
+    for card in self.deck.cards[:3]:
+      self.room.append(card)
     self.deck.cards = self.deck.cards[4:]
 
   def pass_turn(self):
@@ -118,3 +118,6 @@ class Weapon(Card):
     super().__init__(rank, None)
     self.damage = rank
     self.enemies_slain = []
+
+  def __repr__(self):
+    return f"{self.rank}D"
