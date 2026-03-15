@@ -15,7 +15,6 @@ class Player:
   def clean_input(self):
     cleaned = []
     cleaned.extend(re.findall(r"\d+", self.player_input))
-    print("Cleaned Digit: ", cleaned)
     cleaned.extend(re.findall(r"[a-zA-Z]", self.player_input))
     cleaned[0] = cleaned[0].capitalize()
     cleaned[-1] = cleaned[-1].capitalize()

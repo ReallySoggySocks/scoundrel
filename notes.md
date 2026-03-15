@@ -4,7 +4,7 @@
 [] Invalid card choice text getting cleared in terminal
 [] 2 digit cards only applying first digit value
 [x] quit command not working at all.
-[] weapons not reducing damamage as intended
+[x] weapons not reducing damamage as intended
 [x] weapons adding damage to enemies.
 [x] weapon damage not accepting rank 10 cards
 
